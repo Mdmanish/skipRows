@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'booking/booking.css' %}">
+    <script src = "{% static 'booking/booking.js' %}" type = "text/javascript"/></script>
+    <title>Book Your Slot</title>
+</head>
+<body>
+    <header>
+        <h3>Book Your Slot From Here</h3>
+        <hr>
+    </header>
+
+    <main>
+        <div>
+            <h2>{{salon.name}}</h2>
+            <p>{{ salon.description }}</p>
+            <p>{{ salon.mobile }}</p>
+            <p>{{ salon.street }}</p>
+            <p>{{ salon.landmark }}</p>
+            <p>{{ salon.pincode }}</p>
+        </div>
+        <div>
+            <hr>
+            <h2>Number of people in the queue is: {{ queue_size }} and expected time to complete it: {{ expected_time }}</h2>
+            <hr>
+        </div>
+        <div>
+            <h2>Serivices are...</h2>
+            <form action="" method="POST" id="myForm">
+                {% csrf_token %}
+                <table border="2">
+                    <thead>
+                        <tr>
+                            <th>Service name</th>
+                            <th>Time taken</th>
+                            <th>Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for service in services %}
+                        <tr>
+                            <td><input type="checkbox" name={{service.service.id}} value={{service.service.name}} class="visible">
+                                {{ service.service.name }}</td>
+                            <td>{{ service.time }}</td>
+                            <td>{{ service.price }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+
+                </table>
+
+                {% if request.method == 'POST' and is_canceled %}
+                <h2>Your slot is canceled.</h2>
+                {% endif %}
+                
+                {% if request.method != 'POST' or is_canceled %}
+                <button type="submit" id="submitButton" name="submit" value="submit">Submit to book your slot</button>
+                {% endif %}
+            </form>
+            {% if request.method == 'POST' and not is_canceled %}
+                <h2>You have selected below services. Your number in the queue is {{ queue_size|add:1 }}</h2>
+                {% for service in selected_services %}
+                    <h4>{{service}}</h4>
+                {% endfor %}
+                <h4>Expected time (hrs:mins) : {{ time }}</h4>
+                <h4>Total price is Rs: {{ price }}</h4>
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <button type="submit" id="cancelButton" name="cancel" value="cancel">Cancel your slot</button>
+                </form>
+            {% endif %}
+        </div>
+    </main>
+
+    <footer>
+
+    </footer>
+</body>
+</html>

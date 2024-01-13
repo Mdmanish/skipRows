@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'home/home.css' %}">
+    <title>Home</title>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <h1>skipRows</h1>
+        </div>
+        <div class="header-right">
+            <a href="#">All Bookings</a>
+        </div>
+    </header>
+    <hr>
+
+    <main>
+        {% for salon in salons %}
+            <div>
+                <a href="book/{{salon.id}}">{{salon.name}}</a>
+                <p>{{ salon.description }}</p>
+                <p>{{ salon.mobile }}</p>
+                <p>{{ salon.street }}</p>
+                <p>{{ salon.landmark }}</p>
+                <p>{{ salon.pincode }}</p>
+            </div>
+        {% endfor %}
+    </main>
+
+    <footer>
+
+    </footer>
+</body>
+</html>

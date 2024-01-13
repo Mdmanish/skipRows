@@ -1,0 +1,78 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #21282e;
+}
+
+header {
+    text-align: center;
+    background-color: #333;
+    color: #fff;
+    padding: 20px 0;
+    margin-bottom: 20px;
+}
+
+main {
+    /* display: flex;
+    flex-wrap: wrap;
+    justify-content: center; */
+    padding: 20px;
+    background-color: #fff;
+}
+/*
+main > div {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin: 10px;
+    width: 300px;
+    text-align: center;
+    background-color: #fff;
+}
+
+main > div:hover {
+    transform: translateY(-2px);
+    transition: transform 0.2s ease-in-out;
+}
+*/
+
+footer {
+    text-align: center;
+    padding: 10px;
+    background-color: #333;
+    color: #fff;
+}
+
+/* Apply basic styles to the table */
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+/* Style the table header row and cells */
+th {
+    background-color: #f2f2f2;
+    text-align: left;
+    padding: 10px;
+}
+
+/* Style the table body rows and cells alternately for better readability */
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+tr:nth-child(odd) {
+    background-color: #d5d3d3;
+}
+
+/* Style the table data cells */
+td {
+    padding: 10px;
+}
+
+/* Hover effect for table rows */
+tr:hover {
+    background-color: #e0e0e0;
+}
