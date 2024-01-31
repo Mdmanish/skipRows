@@ -5,6 +5,7 @@ from django.http import JsonResponse
 from django.core.serializers import serialize
 import json
 from django.contrib.auth.models import User
+from django.utils import timezone
 
 # def slot_book(request, id):
 #     is_canceled = False
@@ -126,6 +127,16 @@ def slot_book(request, id):
     print(context)
 
     return JsonResponse(context, safe=False)
+
+def slot_cancel(request, id):
+    if request.method == 'POST':
+        data = json.loads(request.body.decode('utf-8'))
+        salon_id = data['salonId']
+        user = User.objects.get(username=data['userName'])
+        slots = Slots.objects.filter(customer=user, salon_id=salon_id, active=True)
+        slots.update(active=False, canceled_by='customer', canceled_on=timezone.now())
+        return JsonResponse({'status': 'success'})
+    
 
 def update_location(request):
     if request.method == 'POST':

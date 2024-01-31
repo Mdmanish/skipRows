@@ -93,6 +93,7 @@ class Salons(models.Model):
     name = models.CharField(max_length=100, blank=False)
     description = models.TextField(null=True, blank=True)
     image = models.ImageField(null=True, blank=True, upload_to='salon_images/')
+    image_url = models.TextField(null=True, blank=True)
     mobile = models.IntegerField()
     location_link = models.CharField(max_length=500, null=True, blank=True)
     street = models.CharField(max_length=200)

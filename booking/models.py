@@ -40,7 +40,7 @@ class Slots(models.Model):
     price = models.FloatField()
     time = models.CharField(max_length=5)
     created_on = models.DateTimeField(default=timezone.now)
-    canceled_on = models.DateTimeField(default=timezone.now)
+    canceled_on = models.DateTimeField(null=True , blank=True)
     canceled_by = models.CharField(max_length=10, choices=[('customer','Customer'), ('salon', 'Salon')])
     active = models.BooleanField(default=True)
     
