@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from .models import Salons
 from booking.models import Slots
 from django.http import JsonResponse
+from .utils import calculate_distance
+from django.forms.models import model_to_dict
 
 
 # def home_view(request):
@@ -11,13 +13,40 @@ from django.http import JsonResponse
 #     salons = Salons.objects.all()
 #     return render(request, template_name='home/home.html', context={'salons':salons})
 
+def find_nearest_shops(request):
+    user_latitude = float(request.GET.get('location[latitude]'))
+    user_longitude = float(request.GET.get('location[longitude]'))
+
+    # Find nearest shops
+    shops = Salons.objects.all()
+    nearest_shops = []
+
+    for shop in shops:
+        distance = calculate_distance(user_latitude, user_longitude, shop.latitude, shop.longitude)
+        shop.distance_to_user = distance
+        nearest_shops.append(shop)
+
+    # Sort the shops by distance
+    nearest_shops = sorted(nearest_shops, key=lambda x: x.distance_to_user)
+    return nearest_shops
 
 
 def home_view(request):
     print('request', request.body)
-    salons = Salons.objects.all()
+    salons = find_nearest_shops(request)
+    salons_data = [
+        {
+            **model_to_dict(salon),
+            'image': str(salon.image),
+            'city_id': salon.city.id,
+            'distance_to_user': salon.distance_to_user
+        }
+        for salon in salons
+    ]
+    data = {'data': salons_data}
+    # salons = Salons.objects.all()
     username = request.GET.get('username')
-    data = {'data': list(salons.values())}
+    # data = {'data': list(salons.values())}
     if username:
         slots = Slots.objects.filter(customer__username=username, active=True)
         if slots:

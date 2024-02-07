@@ -1,4 +1,5 @@
 from django.db import models
+# from django.contrib.gis.db import models as gismodels
 from django.contrib.auth.models import AbstractUser, Permission
 
 STATE_CHOICES = [
@@ -95,6 +96,9 @@ class Salons(models.Model):
     image = models.ImageField(null=True, blank=True, upload_to='salon_images/')
     image_url = models.TextField(null=True, blank=True)
     mobile = models.IntegerField()
+    # coordinate = gismodels.PointField(null=True, blank=True)
+    latitude = models.FloatField(null=True, blank=True)
+    longitude = models.FloatField(null=True, blank=True)
     location_link = models.CharField(max_length=500, null=True, blank=True)
     street = models.CharField(max_length=200)
     landmark = models.CharField(max_length=200)
