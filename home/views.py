@@ -32,21 +32,23 @@ def find_nearest_shops(request):
 
 
 def home_view(request):
-    print('request', request.body)
-    salons = find_nearest_shops(request)
-    salons_data = [
-        {
-            **model_to_dict(salon),
-            'image': str(salon.image),
-            'city_id': salon.city.id,
-            'distance_to_user': salon.distance_to_user
-        }
-        for salon in salons
-    ]
-    data = {'data': salons_data}
-    # salons = Salons.objects.all()
+    location = request.GET.get('location[latitude]', None)
+    if location is not None:
+        salons = find_nearest_shops(request)
+        salons_data = [
+            {
+                **model_to_dict(salon),
+                'image': str(salon.image),
+                'city_id': salon.city.id,
+                'distance_to_user': salon.distance_to_user
+            }
+            for salon in salons
+        ]
+        data = {'data': salons_data}
+    else:
+        salons = Salons.objects.all()
+        data = {'data': list(salons.values())}
     username = request.GET.get('username')
-    # data = {'data': list(salons.values())}
     if username:
         slots = Slots.objects.filter(customer__username=username, active=True)
         if slots:
