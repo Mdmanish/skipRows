@@ -25,7 +25,7 @@ SECRET_KEY = 'b8&6ip89_5b)2rd84=1(u&x%mqoivohwiphtewvn=f@b4u!qcs'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'skiprows.onrender.com']
 
 
 # Application definition
