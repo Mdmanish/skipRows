@@ -114,7 +114,8 @@ def slot_book(request, id):
             services=data['selectedRows'],
             price=data['totalAmount'],
             time=data['totalExpectedTime'],
-            active=True
+            active=True,
+            canceled_on=timezone.now()
         )
 
         print('slot_obj:', slot_obj)
